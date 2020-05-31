@@ -95,7 +95,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
     private void pickImage() {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
-                .setAspectRatio(4,3)
+                .setAspectRatio(3,4)
                 .start(this);
     }
 
