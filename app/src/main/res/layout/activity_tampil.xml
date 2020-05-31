@@ -102,7 +102,7 @@
                     android:id="@+id/tv5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tanggal"
+                    android:text="@string/tahun"
                     android:textColor="@android:color/black" />
 
                 <TextView
@@ -113,12 +113,12 @@
                     android:textColor="@android:color/black" />
 
                 <TextView
-                    android:id="@+id/tv_tanggal"
+                    android:id="@+id/tv_tahun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/medium_margin"
                     android:layout_weight="1"
-                    android:text="@string/tanggal"
+                    android:text="@string/tahun"
                     android:textColor="@android:color/black" />
             </TableRow>
 

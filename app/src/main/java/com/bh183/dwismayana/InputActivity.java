@@ -5,8 +5,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -18,10 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 
@@ -35,22 +31,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.UUID;
 
 public class InputActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText editJudul, editTanggal, editPenerbit, editPenulis, editSinopsis, editHarga , editJumlahHalaman;
+    private EditText editJudul, editTahun, editPenerbit, editPenulis, editSinopsis, editHarga , editJumlahHalaman;
     private ImageView ivBuku;
     private DatabaseHandler dbHandler;
-    private SimpleDateFormat sdFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
     private boolean updateData = false;
     private int idBuku = 0;
     private Button btnSimpan, btnPilihTanggal;
-    private String tanggalTerbit;
+    private String tahunTerbit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +49,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_input);
 
         editJudul = findViewById(R.id.edit_Judul);
-        editTanggal = findViewById(R.id.edit_tanggal);
+        editTahun = findViewById(R.id.edit_tahun);
         editPenerbit = findViewById(R.id.edit_penerbit);
         editPenulis = findViewById(R.id.edit_penulis);
         editSinopsis = findViewById(R.id.edit_sinopsis);
@@ -66,7 +57,6 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         editJumlahHalaman = findViewById(R.id.edit_jumlahHalaman);
         ivBuku = findViewById(R.id.iv_buku);
         btnSimpan= findViewById(R.id.btn_simpan);
-        btnPilihTanggal = findViewById(R.id.btn_pilih_tanggal);
 
         dbHandler = new DatabaseHandler(this);
 
@@ -78,7 +68,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
             updateData =true;
             idBuku = data.getInt("ID");
             editJudul.setText(data.getString("JUDUL"));
-            editTanggal.setText(data.getString("TANGGAL"));
+            editTahun.setText(data.getString("TAHUN"));
             editPenulis.setText(data.getString("PENULIS"));
             editPenerbit.setText(data.getString("PENERBIT"));
             editSinopsis.setText(data.getString("SINOPSIS"));
@@ -89,7 +79,6 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
 
         ivBuku.setOnClickListener(this);
         btnSimpan.setOnClickListener(this);
-        btnPilihTanggal.setOnClickListener(this);
     }
 
     private void pickImage() {
@@ -113,7 +102,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
                     loadImageFromInternalStorage(location);
                 } catch (FileNotFoundException er) {
                     er.printStackTrace();
-                    Toast.makeText(this, "Ada esalahan dalam pengambilan gambar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Ada kesalahan dalam pengambilan gambar", Toast.LENGTH_SHORT).show();
                 }
         } else {
             Toast.makeText(this, "Anda belum memilih gambar", Toast.LENGTH_SHORT).show();
@@ -187,9 +176,9 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void simpanData() {
-        String judul, gambar, penulis, penerbit,sinopsis,harga,jumlahHalaman;
-        Date tanggal = new Date();
+        String judul, gambar, tahun, penulis, penerbit,sinopsis,harga,jumlahHalaman;
         judul = editJudul.getText().toString();
+        tahun = editTahun.getText().toString();
         gambar = ivBuku.getContentDescription().toString();
         penulis = editPenulis.getText().toString();
         penerbit = editPenerbit.getText().toString() ;
@@ -197,14 +186,9 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         harga = "Rp.    " + editHarga.getText().toString() + ",00    ,-";
         jumlahHalaman = editJumlahHalaman.getText().toString();
 
-        try {
-            tanggal = sdFormat.parse(editTanggal.getText().toString());
-        } catch (ParseException er) {
-            er.printStackTrace();
-        }
 
         Buku tempBuku = new Buku(
-                idBuku, judul, tanggal, gambar, penulis, penerbit ,sinopsis,harga,jumlahHalaman
+                idBuku, judul, tahun, gambar, penulis, penerbit ,sinopsis,harga,jumlahHalaman
         );
 
         if (updateData == true) {
@@ -222,30 +206,7 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
         Toast.makeText(this, "Data Buku dihapus", Toast.LENGTH_SHORT).show();
     }
 
-    private void pilihTanggal() {
-        final Calendar calendar = Calendar.getInstance();
-        DatePickerDialog pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                tanggalTerbit = dayOfMonth + "/" + month + "/" + year;
-                pilihWaktu();
-            }
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-        pickerDialog.show();
-    }
-    private void pilihWaktu() {
-        final Calendar calendar = Calendar.getInstance();
-        TimePickerDialog pickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                tanggalTerbit = tanggalTerbit + " " + hourOfDay + ":" + minute;
-                editTanggal.setText(tanggalTerbit);
-            }
-        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
-
-        pickerDialog.show();
-    }
 
     @Override
     public void onClick(View v) {
@@ -255,8 +216,6 @@ public class InputActivity extends AppCompatActivity implements View.OnClickList
             simpanData();
         } else if (idView == R.id.iv_buku) {
             pickImage();
-        } else if (idView == R.id.btn_pilih_tanggal) {
-            pilihTanggal();
         }
 
     }

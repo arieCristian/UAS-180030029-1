@@ -2,7 +2,7 @@
     <string name="app_name">UAS 180030029 1</string>
     <string name="dataBuku">DATA BUKU</string>
     <string name="judul">Judul Buku</string>
-    <string name="tanggal">Tanggal Terbit</string>
+    <string name="tahun">Tahun Terbit</string>
     <string name="penulis">Penulis</string>
     <string name="penerbit">Penerbit</string>
     <string name="gambar">Gambar Buku</string>

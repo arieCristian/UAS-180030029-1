@@ -21,14 +21,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private final static String TABLE_BUKU = "t_buku" ;
     private final static String KEY_ID_BUKU = "id_buku" ;
     private final static String KEY_JUDUL = "Judul" ;
-    private final static String KEY_TGL = "Tanggal";
+    private final static String KEY_TAHUN = "Tahun";
     private final static String KEY_GAMBAR = "Gambar";
     private final static String KEY_PENULIS = "Penulis";
     private final static String KEY_PENERBIT = "Penerbit" ;
     private final static String KEY_SINOPSIS = "Sinopsis" ;
     private final static String KEY_HARGA = "Harga";
     private final static String KEY_JUMLAH_HALAMAN ="Jumlah_halaman";
-    private SimpleDateFormat sdFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.getDefault());
     private Context context;
 
     public DatabaseHandler(Context ctx) {
@@ -39,7 +38,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_BUKU = "CREATE TABLE " + TABLE_BUKU
                 + "(" + KEY_ID_BUKU + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + KEY_JUDUL + " TEXT, " + KEY_TGL + " DATE, "
+                + KEY_JUDUL + " TEXT, " + KEY_TAHUN + " TEXT, "
                 + KEY_GAMBAR + " TEXT, " + KEY_PENULIS + " TEXT, "
                 + KEY_PENERBIT + " TEXT, " + KEY_SINOPSIS +" TEXT, "
                 + KEY_HARGA + " TEXT," + KEY_JUMLAH_HALAMAN + " TEXT" + ")";
@@ -60,7 +59,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(KEY_JUDUL, dataBuku.getJudulBuku());
-        cv.put(KEY_TGL, sdFormat.format(dataBuku.getTglTerbit()));
+        cv.put(KEY_TAHUN, dataBuku.getThTerbit());
         cv.put(KEY_GAMBAR, dataBuku.getGambar());
         cv.put(KEY_PENULIS, dataBuku.getPenulis());
         cv.put(KEY_PENERBIT, dataBuku.getPenerbit());
@@ -75,7 +74,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(KEY_JUDUL, dataBuku.getJudulBuku());
-        cv.put(KEY_TGL, sdFormat.format(dataBuku.getTglTerbit()));
+        cv.put(KEY_TAHUN, dataBuku.getThTerbit());
         cv.put(KEY_GAMBAR, dataBuku.getGambar());
         cv.put(KEY_PENULIS, dataBuku.getPenulis());
         cv.put(KEY_PENERBIT, dataBuku.getPenerbit());
@@ -90,7 +89,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(KEY_JUDUL, dataBuku.getJudulBuku());
-        cv.put(KEY_TGL, sdFormat.format(dataBuku.getTglTerbit()));
+        cv.put(KEY_TAHUN, dataBuku.getThTerbit());
         cv.put(KEY_GAMBAR, dataBuku.getGambar());
         cv.put(KEY_PENULIS, dataBuku.getPenulis());
         cv.put(KEY_PENERBIT, dataBuku.getPenerbit());
@@ -115,17 +114,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor csr = db.rawQuery(query, null);
         if (csr.moveToFirst()){
             do {
-                Date tempDate = new Date();
-                try {
-                    tempDate = sdFormat.parse(csr.getString(2));
-                } catch (ParseException er){
-                    er.printStackTrace();
-                }
 
                 Buku tempBuku = new Buku(
                         csr.getInt(0),
                         csr.getString(1),
-                        tempDate,
+                        csr.getString(2),
                         csr.getString(3),
                         csr.getString(4),
                         csr.getString(5),
@@ -151,18 +144,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private void inisialisasiBukuAwal(SQLiteDatabase db) {
         int idBuku = 0;
-        Date tempDate = new Date();
-
-        try {
-            tempDate = sdFormat.parse("09/07/2018 18:00");
-        } catch (ParseException er) {
-            er.printStackTrace();
-        }
 
         Buku buku1 = new Buku(
                 idBuku,
                 "Bukan Cinderella",
-                tempDate,
+                "2018",
                 storeImageFile(R.drawable.buku1),
                 "Dheti Azmi",
                 "Gramedia Widiasarana Indonesia",
@@ -181,16 +167,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         idBuku++;
 
 
-        try {
-            tempDate = sdFormat.parse("02/02/2014 18:00");
-        } catch (ParseException er) {
-            er.printStackTrace();
-        }
-
         Buku buku2 = new Buku(
                 idBuku,
                 "Dia Adalah Dilanku Tahun 1990",
-                tempDate,
+                "2014",
                 storeImageFile(R.drawable.buku2),
                 "Pidi Baiq",
                 "Pastel Books",

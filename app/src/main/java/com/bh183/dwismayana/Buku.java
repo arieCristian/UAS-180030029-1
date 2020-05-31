@@ -6,7 +6,7 @@ public class Buku {
 
     private int idBuku;
     private String judulBuku;
-    private Date tglTerbit;
+    private String thTerbit;
     private String gambar;
     private String penulis;
     private String penerbit;
@@ -14,10 +14,10 @@ public class Buku {
     private String harga ;
     private String jumlahHalaman ;
 
-    public Buku(int idBuku , String judulBuku , Date tglTerbit , String gambar , String penulis , String penerbit , String sinopsis , String harga , String jumlahHalaman) {
+    public Buku(int idBuku , String judulBuku , String thTerbit , String gambar , String penulis , String penerbit , String sinopsis , String harga , String jumlahHalaman) {
         this.idBuku = idBuku;
         this.judulBuku = judulBuku ;
-        this.tglTerbit = tglTerbit ;
+        this.thTerbit = thTerbit ;
         this.gambar = gambar ;
         this.penulis = penulis ;
         this.penerbit = penerbit ;
@@ -28,7 +28,7 @@ public class Buku {
 
     public void setIdBuku(int idBuku){this.idBuku = idBuku ;}
     public void setjudulBuku(String judulBuku) {this.judulBuku = judulBuku;}
-    public void setTglTerbit(Date tglTerbit) {this.tglTerbit = tglTerbit ;}
+    public void setThTerbit(String thTerbit) {this.thTerbit = thTerbit ;}
     public void setGambar(String gambar) {this.gambar = gambar ;}
     public void setPenulis(String penulis) {
         this.penulis = penulis;
@@ -41,7 +41,7 @@ public class Buku {
 
     public int getIdBuku() {return idBuku ;}
     public String getJudulBuku() {return judulBuku ;}
-    public Date getTglTerbit() {return  tglTerbit ;} ;
+    public String getThTerbit() {return  thTerbit ;} ;
     public String getGambar() {
         return gambar;
     }

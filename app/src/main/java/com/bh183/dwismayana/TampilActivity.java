@@ -1,15 +1,12 @@
 package com.bh183.dwismayana;
 
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +19,7 @@ import java.io.FileNotFoundException;
 public class TampilActivity extends AppCompatActivity {
 
     private ImageView imgBuku;
-    private TextView tvJudul, tvTanggal, tvPenulis,tvPenerbit , tvSinopsis,tvHarga,tvJumlahHalaman;
+    private TextView tvJudul, tvTahun, tvPenulis,tvPenerbit , tvSinopsis,tvHarga,tvJumlahHalaman;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +27,7 @@ public class TampilActivity extends AppCompatActivity {
 
         imgBuku = findViewById(R.id.iv_buku);
         tvJudul = findViewById(R.id.tv_judul);
-        tvTanggal = findViewById(R.id.tv_tanggal);
+        tvTahun = findViewById(R.id.tv_tahun);
         tvPenulis = findViewById(R.id.tv_penulis);
         tvPenerbit = findViewById(R.id.tv_penerbit) ;
         tvSinopsis = findViewById(R.id.tv_sinopsis) ;
@@ -39,7 +36,7 @@ public class TampilActivity extends AppCompatActivity {
 
         Intent terimaData = getIntent();
         tvJudul.setText(terimaData.getStringExtra("JUDUL"));
-        tvTanggal.setText(terimaData.getStringExtra("TANGGAL"));
+        tvTahun.setText(terimaData.getStringExtra("TAHUN"));
         tvPenulis.setText(terimaData.getStringExtra("PENULIS"));
         tvPenerbit.setText(terimaData.getStringExtra("PENERBIT"));
         tvSinopsis.setText(terimaData.getStringExtra("SINOPSIS"));

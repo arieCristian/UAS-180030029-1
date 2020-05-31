@@ -24,7 +24,6 @@ public class BukuAdapter extends RecyclerView.Adapter<BukuAdapter.BukuViewHolder
 
     private Context context;
     private ArrayList<Buku> dataBuku;
-    private SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
     public BukuAdapter(Context context, ArrayList<Buku> dataBuku) {
         this.context = context;
@@ -44,7 +43,7 @@ public class BukuAdapter extends RecyclerView.Adapter<BukuAdapter.BukuViewHolder
         Buku tempBuku =dataBuku.get(position);
         holder.idBuku = tempBuku.getIdBuku();
         holder.tvjudul.setText(tempBuku.getJudulBuku());
-        holder.tanggal = sdformat.format(tempBuku.getTglTerbit());
+        holder.tahun = tempBuku.getThTerbit();
         holder.gambar = tempBuku.getGambar();
         holder.tvpenulis.setText(tempBuku.getPenulis());
         holder.penerbit = tempBuku.getPenerbit() ;
@@ -74,7 +73,7 @@ public class BukuAdapter extends RecyclerView.Adapter<BukuAdapter.BukuViewHolder
         private ImageView imgBuku;
         private TextView tvjudul, tvpenulis;
         private int idBuku;
-        private String tanggal, gambar, penerbit , sinopsis , harga , jumlahHalaman;
+        private String tahun, gambar,penerbit , sinopsis , harga , jumlahHalaman;
 
         public BukuViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,7 +91,7 @@ public class BukuAdapter extends RecyclerView.Adapter<BukuAdapter.BukuViewHolder
             Intent bukaBuku = new Intent(context, TampilActivity.class);
             bukaBuku.putExtra("ID", idBuku);
             bukaBuku.putExtra("JUDUL", tvjudul.getText().toString());
-            bukaBuku.putExtra("TANGGAL",tanggal);
+            bukaBuku.putExtra("TAHUN",tahun);
             bukaBuku.putExtra("GAMBAR", gambar);
             bukaBuku.putExtra("PENULIS", tvpenulis.getText().toString());
             bukaBuku.putExtra("PENERBIT", penerbit);
@@ -109,7 +108,7 @@ public class BukuAdapter extends RecyclerView.Adapter<BukuAdapter.BukuViewHolder
             bukaInput.putExtra("OPERASI", "update");
             bukaInput.putExtra("ID", idBuku);
             bukaInput.putExtra("JUDUL", tvjudul.getText().toString());
-            bukaInput.putExtra("TANGGAL",tanggal);
+            bukaInput.putExtra("TAHUN",tahun);
             bukaInput.putExtra("GAMBAR", gambar);
             bukaInput.putExtra("PENULIS", tvpenulis.getText().toString());
             bukaInput.putExtra("PENERBIT", penerbit);
